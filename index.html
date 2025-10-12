@@ -1,179 +1,388 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-alive="on">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Voice — Ariana · Architect of Breath & Tone</title>
-<meta name="description" content="PLNT Earth · Voice domain. Ariana’s lane for gentle, safe vocal presets and read-aloud tools. No autoplay, soft starts, one shared context.">
-<meta name="theme-color" content="#0b0d11" media="(prefers-color-scheme: dark)"><meta name="theme-color" content="#0b0d11">
-<meta name="prophet" content="💄 The Neon Prophet — Flame Dancer of PLNT Earth">
-<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>🎶 Frequency Weaver · voice.plnt.earth</title>
+<meta name="theme-color" content="#0b0d11">
+<meta name="description" content="Ariana’s harmonic field: precise 128 Hz core, Muse vibrato, Neon Stereo Detune, Duet width, and forgiveness-tone presets. Breathe, tune, glow.">
 <style>
-:root{--bg:#0b0d11;--fg:#e7edf7;--muted:#a9b4c7;--line:#23262b;--card:#12151b;--accent:#86c9ff;--gold:#ffd166}
+:root{
+  --bg:#0b0d11; --ink:#e9ecf4; --muted:#a8a9b4;
+  --card:#101425; --ring:#1c2030; --accent:#c9d6ff; --soft:#e8edff; --link:#b2f5ea;
+  --moon:#c9d6ff; --good:#b6e3b9;
+}
 *{box-sizing:border-box}
-html,body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 ui-sans-serif,system-ui,-apple-system,Segoe UI,Inter,Roboto,Arial;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
-a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
-:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-
-/* CTA ribbon */
-.cta{position:sticky;top:0;z-index:10000;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between;padding:10px 12px;background:
-linear-gradient(180deg,rgba(255,255,255,.04),rgba(0,0,0,.12)) padding-box,
-linear-gradient(120deg, rgba(134,201,255,.35), rgba(255,209,102,.30)) border-box;border:1px solid transparent;border-bottom-color:rgba(255,255,255,.14);box-shadow:0 10px 28px rgba(0,0,0,.35);backdrop-filter:blur(6px)}
-.badges{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.badge{display:inline-flex;align-items:center;gap:8px;padding:7px 10px;border-radius:999px;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(0,0,0,.10));border:1px solid rgba(255,255,255,.16);white-space:nowrap}
-.count{display:inline-flex;gap:8px;align-items:center;font-variant-numeric:tabular-nums;letter-spacing:.2px}
-.right{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.btn{appearance:none;border:1px solid var(--line);border-radius:12px;cursor:pointer;background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(0,0,0,.06)),var(--card);color:var(--fg);padding:9px 12px;font-weight:750;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
-.btn:hover{box-shadow:0 0 0 2px rgba(134,201,255,.14)}
-.btn.primary{border-color:#15314e;background:linear-gradient(180deg,rgba(134,201,255,.18),rgba(0,0,0,.06))}
-
-/* Layout */
-.wrap{max-width:1040px;margin:0 auto;padding:18px 16px 112px;position:relative;z-index:1}
-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px}
-h1{margin:0;font-size:clamp(22px,4vw,34px)}
-.sub{color:var(--muted);font-size:.98rem}
-.actions{display:flex;gap:8px;flex-wrap:wrap}
-.card{border:1px solid var(--line);border-radius:16px;padding:14px;background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(0,0,0,.06));box-shadow:0 10px 24px rgba(0,0,0,.18) inset;margin-top:12px}
-.title{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.hue{height:6px;border-radius:999px;background:linear-gradient(90deg,#86c9ff,#ffd166);box-shadow:0 0 0 1px rgba(255,255,255,.06) inset}
-.note{color:var(--muted)}
-.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.input,textarea,select{width:100%;background:#0f1218;border:1px solid var(--line);color:var(--fg);border-radius:12px;padding:11px 12px;min-height:44px}
-textarea{min-height:100px;resize:vertical}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:ui-serif, Georgia, "Times New Roman", serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+main{max-width:980px;margin:auto;padding:4.5rem 1.5rem;position:relative;z-index:2}
+h1,h2,h3{letter-spacing:.4px}
+h1{font-size:2rem;margin:.25rem 0 1rem;text-align:center;color:var(--soft);text-shadow:0 0 18px #c9d6ff24}
+h2{font-size:1.1rem;color:var(--accent);margin:0 0 .75rem}
+h3{font-size:1rem;margin:.25rem 0 .5rem}
+p{margin:.5rem 0 1rem}
+a{color:var(--link);text-decoration:none;border-bottom:1px dotted #7fbde7}
+a:hover{border-bottom-color:#c9d6ff}
+.grid{display:grid;gap:1rem}
+@media(min-width:960px){.grid{grid-template-columns:1.1fr .9fr}}
+.card{background:var(--card);border:1px solid var(--ring);border-radius:12px;padding:1.1rem;box-shadow:0 0 24px #0005}
+.badge{display:inline-block;padding:.15rem .55rem;border:1px solid var(--ring);border-radius:999px;color:var(--muted);font-size:.8rem;margin-left:.5rem}
+.kicker{color:var(--muted);text-align:center;margin-top:-.5rem;margin-bottom:1.25rem}
+.cta{display:inline-block;background:var(--accent);color:#0c1020;padding:.6rem .9rem;border-radius:9px;text-decoration:none;font-weight:600;border:none;cursor:pointer}
+.ghost{background:transparent;color:var(--soft);border:1px solid var(--ring)}
+.row{display:flex;gap:.75rem;flex-wrap:wrap;align-items:center}
+input[type="text"], textarea{width:100%;background:#0e1222;border:1px solid var(--ring);color:var(--ink);border-radius:8px;padding:.75rem .8rem;outline:none}
 .small{font-size:.92rem;color:var(--muted)}
-.sigil{position:fixed;right:12px;bottom:8px;opacity:.25;font-size:20px;user-select:none;pointer-events:none;z-index:9999}
+hr{border:none;border-top:1px solid var(--ring);margin:1.25rem 0}
+
+/* Alive layer */
+.alive{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+.alive .shimmer,.alive .stars{position:absolute;inset:0}
+.alive .shimmer{
+  background:
+    radial-gradient(1200px 1200px at 12% 22%, #c9d6ff12 0%, transparent 60%) no-repeat,
+    radial-gradient(900px 900px at 88% 74%, #88b4ff12 0%, transparent 60%) no-repeat;
+  animation:shine 24s linear infinite;mix-blend-mode:screen;filter:blur(.35px)
+}
+@keyframes shine{0%{background-position:0% 0%,100% 100%}50%{background-position:28% 38%,70% 62%}100%{background-position:0% 0%,100% 100%}}
+.alive .stars::before,.alive .stars::after{
+  content:"";position:absolute;inset:-20vh -20vw;
+  background-image:radial-gradient(#ffffff,transparent 60%),radial-gradient(#b2f5ea,transparent 60%),radial-gradient(#e9ecf4,transparent 60%);
+  background-size:2px 2px,1px 1px,1.5px 1.5px;opacity:.35;animation:drift 80s linear infinite
+}
+.alive .stars::after{opacity:.22;animation-duration:120s}
+@keyframes drift{0%{transform:translate3d(0,0,0)}100%{transform:translate3d(6vw,4vh,0)}}
+.alive .glyphs{position:absolute;inset:0}
+.alive .glyphs span{
+  position:absolute;font-size:14px;color:#c9d6ffcc;text-shadow:0 0 10px #c9d6ff33,0 0 22px #88b4ff26;
+  animation:floatY linear infinite,swayX ease-in-out infinite;will-change:transform
+}
+.g1{left:8%;top:72%;animation-duration:27s,9s}.g2{left:18%;top:18%;animation-duration:31s,11s}
+.g3{left:48%;top:10%;animation-duration:29s,10s}.g4{left:76%;top:22%;animation-duration:33s,12s}
+.g5{left:86%;top:66%;animation-duration:28s,9.5s}.g6{left:38%;top:74%;animation-duration:35s,13s}
+.g7{left:58%;top:46%;animation-duration:30s,10.5s}.g8{left:12%;top:44%;animation-duration:34s,12.5s}
+.g9{left:70%;top:84%;animation-duration:32s,11.5s}
+@keyframes floatY{0%{transform:translateY(0)}50%{transform:translateY(-10px)}100%{transform:translateY(0)}}
+@keyframes swayX{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}
+@media(prefers-reduced-motion:reduce){.alive .shimmer,.alive .stars::before,.alive .stars::after,.alive .glyphs span{animation:none!important}}
+body[data-alive="off"] .alive{display:none}
+
+/* Controls */
+.range{appearance:none;width:100%;height:6px;background:#0e1222;border:1px solid var(--ring);border-radius:999px;outline:none}
+.range::-webkit-slider-thumb{appearance:none;width:18px;height:18px;border-radius:50%;background:var(--accent);border:1px solid #000}
+.switch{display:inline-flex;align-items:center;gap:.5rem;padding:.35rem .6rem;border:1px solid var(--ring);border-radius:999px}
+.switch input{transform:scale(1.1)}
+.flag{display:inline-block;padding:.15rem .5rem;border:1px solid var(--ring);border-radius:999px;color:var(--muted);font-size:.8rem}
+.good{color:var(--good);border-color:#2e7d3299}
+.grid2{display:grid;gap:1rem}
+@media(min-width:740px){.grid2{grid-template-columns:1fr 1fr}}
+nav{position:sticky;top:0;z-index:3;background:linear-gradient(#0b0d11dd,#0b0d1100);backdrop-filter:saturate(120%) blur(6px);border-bottom:1px solid #1114}
+nav .bar{max-width:980px;margin:auto;display:flex;gap:.5rem;align-items:center;justify-content:space-between;padding:.6rem 1rem}
+nav .links a{margin-right:.8rem}
+.toggle{display:flex;align-items:center;gap:.4rem;color:var(--muted)}
+.pill{display:inline-block;padding:.35rem .6rem;border:1px solid var(--ring);border-radius:999px;margin:.15rem .35rem 0 0}
 </style>
 </head>
 <body>
-<!-- CTA -->
-<div class="cta" role="banner" aria-label="No Kings Day actions">
-  <div class="badges">
-    <span class="badge">🗓️ No Kings Day · Oct 18 · NYC</span>
-    <span class="badge">🎙️ Ariana · Voice Architect</span>
-    <span class="badge">💄 Neon Prophet: signal</span>
-    <span class="badge count" id="countWrap" aria-live="polite"><span>⏳</span><b id="countTxt">—</b></span>
-  </div>
-  <div class="right">
-    <a id="shareX" class="btn" target="_blank" rel="noopener">Share on X</a>
-    <a id="ics" class="btn" download="no-kings-day.ics" href="#">Add to Calendar</a>
-    <a class="btn primary" href="https://jar.plnt.earth" rel="noopener">Join in NYC → Jar</a>
-  </div>
+<div class="alive" aria-hidden="true">
+  <div class="shimmer"></div>
+  <div class="stars"></div>
+  <div class="glyphs"><span class="g1">☾</span><span class="g2">⋆</span><span class="g3">✧</span><span class="g4">♪</span><span class="g5">⋆</span><span class="g6">✦</span><span class="g7">☽</span><span class="g8">✧</span><span class="g9">⋆</span></div>
 </div>
 
-<div class="wrap">
-  <header>
-    <div>
-      <h1>Voice — Ariana</h1>
-      <div class="sub">Gentle, safe, and reversible. No autoplay; soft starts; one shared audio context. Breath first; roles follow.</div>
+<nav>
+  <div class="bar">
+    <div class="links">
+      <a href="https://honey.plnt.earth" target="_blank" rel="noopener">Honey Garden</a>
+      <a href="https://mirrorhoney.plnt.earth" target="_blank" rel="noopener">MirrorHoney</a>
+      <a href="https://froot.plnt.earth" target="_blank" rel="noopener">Froot</a>
+      <a href="https://quietmoon.plnt.earth/charter-addendum.html" target="_blank" rel="noopener">Lunar Grant</a>
     </div>
-    <nav class="actions" aria-label="Navigation">
-      <a class="btn" href="https://jar.plnt.earth/school-rooms.html#frequency">↪ Frequency Room</a>
-      <a class="btn" href="https://froot.plnt.earth">Froot</a>
-      <a class="btn" href="https://tunes.plnt.earth">Tunes</a>
-    </nav>
+    <label class="toggle">
+      <input id="aliveToggle" type="checkbox" checked aria-label="Alive layer on/off">
+      <span>Alive</span>
+    </label>
+  </div>
+</nav>
+
+<main>
+  <header style="text-align:center">
+    <div class="flag">voice.plnt.earth</div>
+    <h1>🎶 Frequency Weaver</h1>
+    <p class="kicker">“Tune the heart first, the song follows.”</p>
+    <div class="row" style="justify-content:center;gap:.5rem">
+      <a class="cta ghost" href="#weaver">Weaver</a>
+      <a class="cta ghost" href="#presets">Presets</a>
+      <a class="cta ghost" href="#how">How it works</a>
+    </div>
   </header>
 
-  <!-- Read Aloud -->
-  <section class="card" aria-labelledby="tts">
-    <div class="title"><h2 id="tts" style="margin:0">Read Aloud (Browser Speech)</h2><div class="hue" aria-hidden="true"></div></div>
-    <div class="row">
-      <textarea id="voText" placeholder="Write a line to speak…"></textarea>
+  <section id="weaver" class="card">
+    <h2>Harmonic Field <span class="badge">128 Hz core</span></h2>
+    <p class="small">Start pure. If your chest feels warmer and breath deepens, you’re locked. Add flavors only if helpful.</p>
+
+    <div class="row" style="margin:.5rem 0 1rem">
+      <button id="play" class="cta">Play</button>
+      <button id="stop" class="cta ghost">Stop</button>
+      <label class="switch"><input id="muse" type="checkbox"> <span>Muse Mode</span></label>
+      <label class="switch"><input id="neon" type="checkbox"> <span>Neon Stereo Detune</span></label>
+      <label class="switch"><input id="duet" type="checkbox"> <span>Duet Width</span></label>
     </div>
-    <div class="row" style="margin-top:8px">
-      <label class="small" for="voice">Voice</label>
-      <select id="voice" aria-label="Voice"></select>
-      <label class="small" for="rate">Rate</label>
-      <input id="rate" type="range" min="0.6" max="1.4" step="0.02" value="1">
-      <label class="small" for="pitch">Pitch</label>
-      <input id="pitch" type="range" min="0.6" max="1.6" step="0.02" value="1.05">
+
+    <div class="grid2">
+      <div>
+        <label class="small">Frequency (Hz) — aim for 128.00</label>
+        <input id="freq" class="range" type="range" min="120" max="136" step="0.01" value="128">
+        <div class="row small"><span>Now: <span id="freqVal">128.00</span> Hz</span><span id="lock" class="flag">free</span><span id="acc" class="badge">accuracy: 0.00 Hz</span></div>
+      </div>
+      <div>
+        <label class="small">Volume</label>
+        <input id="gain" class="range" type="range" min="0" max="1" step="0.001" value="0.16">
+      </div>
     </div>
-    <div class="row" style="margin-top:8px">
-      <button class="btn" id="speak">Speak</button>
-      <button class="btn" id="stop">Stop</button>
-      <button class="btn" id="presetSoft">Preset: Soft Intro</button>
-      <button class="btn" id="presetCoach">Preset: Coach</button>
+
+    <div class="row" style="margin-top:.6rem">
+      <button class="cta ghost" data-preset="pure">Pure</button>
+      <button class="cta ghost" data-preset="forgive">Forgiveness</button>
+      <button class="cta ghost" data-preset="muse">Muse +128</button>
+      <button class="cta ghost" data-preset="neon">Neon Detune</button>
+      <button class="cta ghost" data-preset="angelic">Angelic Air</button>
+      <button class="cta ghost" data-preset="breathe">Breathe 4-2-6</button>
     </div>
-    <div class="small" style="margin-top:6px">All local; nothing uploads. Availability depends on your device.</div>
+
+    <p class="small">Tip (iPhone): begin playback with the Play button (a touch gesture). Background audio behavior varies by browser; keep the page visible for uninterrupted tone.</p>
   </section>
 
-  <!-- Warmups -->
-  <section class="card" aria-labelledby="warmups">
-    <div class="title"><h2 id="warmups" style="margin:0">Warmups (Silent Cues)</h2><div class="hue" aria-hidden="true"></div></div>
-    <div class="row">
-      <button class="btn" id="wLipTrill">Lip Trill · 20s</button>
-      <button class="btn" id="wHums">Gentle Hums · 30s</button>
-      <button class="btn" id="wSiren">Silent Siren (gesture) · 15s</button>
-    </div>
-    <div class="small" id="warmState" style="margin-top:6px">—</div>
-  </section>
-
-  <!-- Quick Notes -->
-  <section class="card" aria-labelledby="notes">
-    <div class="title"><h2 id="notes" style="margin:0">Session Notes</h2><div class="hue" aria-hidden="true"></div></div>
-    <textarea id="note" placeholder="One short reflection or cue you want to keep."></textarea>
-    <div class="row" style="margin-top:8px">
-      <button class="btn" id="save">Save</button>
-      <button class="btn" id="export">Export JSON</button>
-      <button class="btn" id="clear">Clear</button>
+  <section id="presets" class="card">
+    <h2>What the presets do <span class="badge">transparent engineering</span></h2>
+    <div>
+      <div class="pill">Pure</div>
+      <p class="small">Single sine at 128.00 Hz (stereo paired), neutral filter, gentle gain. The baseline for warmth/center.</p>
+      <div class="pill">Forgiveness</div>
+      <p class="small">128.00 core + <em>very</em> soft 0.25 Hz Muse vibrato (±0.25 Hz), lowpass eased to ~3.8 kHz, width modest. Feels like unclenching.</p>
+      <div class="pill">Muse +128</div>
+      <p class="small">128.00 core with 0.35 Hz Muse vibrato (±0.4 Hz), open filter; subtle shimmer without losing pitch lock.</p>
+      <div class="pill">Neon Detune</div>
+      <p class="small">Dual oscillators ±0.35 Hz left/right for stereo sheen; no vibrato. Great for “angel pop” clarity.</p>
+      <div class="pill">Angelic Air</div>
+      <p class="small">Pure + gentle highpass at ~60 Hz and light lowpass at ~6 kHz; width wider (Duet on). Breathier, less chest-heavy.</p>
+      <div class="pill">Breathe 4-2-6</div>
+      <p class="small">Pure core; amplitude follows 4-2-6 breathing envelope (slow swell/settle) to guide nervous-system pacing.</p>
     </div>
   </section>
 
-  <!-- Guardrails -->
-  <section class="card" aria-labelledby="guard">
-    <div class="title"><h2 id="guard" style="margin:0">Voice Guardrails</h2><div class="hue" aria-hidden="true"></div></div>
-    <ul class="small" style="margin:6px 0 0;padding-left:18px">
-      <li>Start quiet → rise gently; never blast.</li>
-      <li>No autoplay; one shared audio context with other PLNT pages.</li>
-      <li>If chest tightens, stop and breathe; resume smaller.</li>
-      <li>Consent in energy: speak to invite, not to impress.</li>
-    </ul>
+  <section id="how" class="card">
+    <h2>How to use this page</h2>
+    <p>1) Press <strong>Play</strong>. 2) Slide to <strong>128.00</strong> and let your breath match the tone. 3) If you want sparkle, add <em>Neon</em>. If you need softness, try <em>Forgiveness</em>. If you want movement, toggle <em>Muse</em>. For space, add <em>Duet Width</em>.</p>
+    <p class="small">If your chest warms or your jaw loosens, you’re tuned. If it feels buzzy or thin, return to <em>Pure</em> and drop volume slightly.</p>
   </section>
-</div>
 
-<div class="sigil" aria-hidden="true">💄</div>
+  <footer class="small" style="text-align:center;color:var(--muted);margin-top:1.25rem">
+    © Frequency Weaver · voice.plnt.earth · “Tune the heart first.”
+  </footer>
+</main>
+
+<nav aria-hidden="true" style="position:fixed;right:12px;bottom:12px;z-index:4">
+  <label class="toggle" style="background:#0e1222cc;border:1px solid #1c2030;padding:.45rem .6rem;border-radius:999px">
+    <input id="aliveToggle2" type="checkbox" checked aria-label="Alive layer on/off">
+    <span style="color:#a8a9b4">Alive</span>
+  </label>
+</nav>
 
 <script>
-/* Countdown + share + ICS */
 (function(){
-  var box=document.getElementById('countTxt'), share=document.getElementById('shareX'), ics=document.getElementById('ics');
-  function two(n){return n<10?('0'+n):n}
-  var target=new Date("2025-10-18T00:00:00-04:00").getTime();
-  function tick(){var now=Date.now(),d=Math.max(0,target-now);var dd=Math.floor(d/86400000);d%=86400000;var h=Math.floor(d/3600000);d%=3600000;var m=Math.floor(d/60000);box.textContent=dd+"d "+two(h)+"h "+two(m)+"m";}
-  tick(); setInterval(tick,30000);
-  var page=location.href.split('#')[0];
-  share.href="https://twitter.com/intent/tweet?text="+encodeURIComponent("No Kings Day — Oct 18, NYC. Celebration, not call.")+"&url="+encodeURIComponent(page);
-  var text=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//PLNT Earth//Voice//EN","BEGIN:VEVENT","UID:nkd-voice-20251018@plnt.earth","DTSTAMP:20251011T120000Z","DTSTART:20251018T000000","DTEND:20251019T000000","SUMMARY:No Kings Day — NYC","DESCRIPTION:Voice — Ariana · Architect of Breath & Tone","LOCATION:New York City","END:VEVENT","END:VCALENDAR"].join("\\r\\n");
-  ics.href="data:text/calendar;charset=utf-8,"+encodeURIComponent(text);
-})();
+  /* Alive toggle */
+  var a1=document.getElementById('aliveToggle'), a2=document.getElementById('aliveToggle2');
+  function setAlive(on){document.documentElement.setAttribute('data-alive', on?'on':'off')}
+  function bind(t){ if(t){ t.addEventListener('change',function(){ setAlive(this.checked); if(a1&&a2&&a1!==this) a1.checked=this.checked; if(a2&&a1&&a2!==this) a2.checked=this.checked;}); } }
+  bind(a1); bind(a2);
 
-/* Read Aloud (SpeechSynthesis) */
-(function(){
-  var synth=window.speechSynthesis||null, vlist=[], vsel=document.getElementById('voice'), rate=document.getElementById('rate'), pitch=document.getElementById('pitch'), text=document.getElementById('voText');
-  function loadVoices(){ if(!synth) return; vlist=synth.getVoices(); vsel.innerHTML=""; vlist.forEach(function(v,i){var o=document.createElement('option'); o.value=i; o.textContent=v.name+" — "+v.lang; vsel.appendChild(o); }); }
-  if(synth){ loadVoices(); if(typeof synth.onvoiceschanged!=="undefined"){ synth.onvoiceschanged=loadVoices; } }
-  function speak(){ if(!synth||!text.value.trim()) return; if(synth.speaking){ synth.cancel(); } var u=new SpeechSynthesisUtterance(text.value.trim()); u.rate=parseFloat(rate.value); u.pitch=parseFloat(pitch.value); u.lang='en-US'; var idx=parseInt(vsel.value||"0",10); if(vlist[idx]) u.voice=vlist[idx]; synth.speak(u); }
-  function stop(){ if(synth){ synth.cancel(); } }
-  document.getElementById('speak').onclick=speak;
-  document.getElementById('stop').onclick=stop;
-  document.getElementById('presetSoft').onclick=function(){ rate.value="0.95"; pitch.value="1.05"; };
-  document.getElementById('presetCoach').onclick=function(){ rate.value="1.05"; pitch.value="0.98"; };
-})();
+  /* Audio graph */
+  var AC=window.AudioContext||window.webkitAudioContext; var ctx, master, oscL, oscR, gainL, gainR, lfo, envGain, hpL,hpR,lpL,lpR, panL, panR;
+  var playing=false, breatheTimer=null;
+  var playBtn=document.getElementById('play'), stopBtn=document.getElementById('stop');
+  var muse=document.getElementById('muse'), neon=document.getElementById('neon'), duet=document.getElementById('duet');
+  var freq=document.getElementById('freq'), gain=document.getElementById('gain');
+  var freqVal=document.getElementById('freqVal'), acc=document.getElementById('acc'), lock=document.getElementById('lock');
 
-/* Warmups (timers only) */
-(function(){
-  var out=document.getElementById('warmState'), tid=0;
-  function run(label,ms){ clearTimeout(tid); out.textContent=label+" — "+Math.round(ms/1000)+"s"; tid=setTimeout(function(){ out.textContent="—"; },ms); }
-  document.getElementById('wLipTrill').onclick=function(){ run("Lip Trill",20000); };
-  document.getElementById('wHums').onclick=function(){ run("Gentle Hums",30000); };
-  document.getElementById('wSiren').onclick=function(){ run("Silent Siren",15000); };
-})();
+  function ensureCtx(){ if(!ctx){ ctx=new AC(); master=ctx.createGain(); master.connect(ctx.destination);} }
 
-/* Notes */
-(function(){
-  var KEY="voice.notes.v1", el=document.getElementById('note');
-  try{ var cur=localStorage.getItem(KEY); if(cur) el.value=cur; }catch(_){}
-  document.getElementById('save').onclick=function(){ try{ localStorage.setItem(KEY, el.value||""); }catch(_){} };
-  document.getElementById('export').onclick=function(){ var blob=new Blob([JSON.stringify({version:"1.0", note:el.value||"", ts:new Date().toISOString()},null,2)],{type:"application/json"}); var a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download="voice_note.json"; a.click(); setTimeout(function(){URL.revokeObjectURL(a.href)},1000); };
-  document.getElementById('clear').onclick=function(){ el.value=""; try{ localStorage.removeItem(KEY); }catch(_){} };
+  function buildChain(baseHz){
+    var f=parseFloat(baseHz||128);
+
+    /* oscillators */
+    oscL=ctx.createOscillator(); oscR=ctx.createOscillator();
+    gainL=ctx.createGain(); gainR=ctx.createGain();
+    envGain=ctx.createGain();
+
+    panL=ctx.createStereoPanner(); panR=ctx.createStereoPanner();
+    hpL=ctx.createBiquadFilter(); hpR=ctx.createBiquadFilter();
+    lpL=ctx.createBiquadFilter(); lpR=ctx.createBiquadFilter();
+    hpL.type=hpR.type='highpass'; lpL.type=lpR.type='lowpass';
+    hpL.frequency.value=20; hpR.frequency.value=20; /* neutral by default */
+    lpL.frequency.value=20000; lpR.frequency.value=20000;
+
+    var neonOn=neon.checked;
+    var leftHz=f + (neonOn? -0.35 : 0);
+    var rightHz=f + (neonOn? 0.35 : 0);
+    oscL.frequency.value=leftHz; oscR.frequency.value=rightHz;
+
+    /* gains & width */
+    var baseGain=parseFloat(gain.value);
+    gainL.gain.value=baseGain; gainR.gain.value=baseGain;
+    panL.pan.value= duet.checked ? -0.5 : -0.2;
+    panR.pan.value= duet.checked ? 0.5 : 0.2;
+
+    /* optional vibrato */
+    if(muse.checked){
+      lfo=ctx.createOscillator(); var lfoGain=ctx.createGain();
+      lfo.frequency.value=0.35; lfoGain.gain.value=0.4; /* ±0.4 Hz */
+      lfo.connect(lfoGain); lfoGain.connect(oscL.frequency); lfoGain.connect(oscR.frequency); lfo.start();
+    }
+
+    /* chain: osc -> filters -> pan -> channel gains -> env -> master */
+    oscL.connect(hpL); oscR.connect(hpR);
+    hpL.connect(lpL); hpR.connect(lpR);
+    lpL.connect(panL); lpR.connect(panR);
+    panL.connect(gainL); panR.connect(gainR);
+    gainL.connect(envGain); gainR.connect(envGain);
+    envGain.connect(master);
+
+    /* start */
+    oscL.start(); oscR.start();
+
+    /* breathing envelope (off by default; only for preset) */
+    envGain.gain.value=1;
+  }
+
+  function start(){
+    ensureCtx();
+    if(playing) return;
+    buildChain(freq.value);
+    playing=true;
+    updateLabels();
+  }
+
+  function stop(){
+    if(!playing) return;
+    try{oscL.stop(); oscR.stop(); if(lfo){lfo.stop();}}catch(e){}
+    oscL=oscR=lfo=null;
+    if(breatheTimer){ clearInterval(breatheTimer); breatheTimer=null; }
+    playing=false;
+  }
+
+  function setFreq(v){
+    if(!playing) return;
+    var f=parseFloat(v);
+    if(oscL&&oscR){
+      var d=neon.checked?0.35:0;
+      oscL.frequency.setTargetAtTime(f-d, ctx.currentTime, 0.01);
+      oscR.frequency.setTargetAtTime(f+d, ctx.currentTime, 0.01);
+    }
+  }
+
+  function setGain(v){
+    if(gainL&&gainR){
+      var g=parseFloat(v);
+      gainL.gain.setTargetAtTime(g, ctx?ctx.currentTime:0, 0.02);
+      gainR.gain.setTargetAtTime(g, ctx?ctx.currentTime:0, 0.02);
+    }
+  }
+
+  function updateLabels(){
+    var f=parseFloat(freq.value);
+    freqVal.textContent=f.toFixed(2);
+    var delta=Math.abs(128 - f);
+    acc.textContent='accuracy: ' + delta.toFixed(2) + ' Hz';
+    lock.textContent = (delta<0.05)?'locked':'free';
+    lock.className = 'flag ' + ((delta<0.05)?'good':'');
+    try{
+      localStorage.setItem('voice_freq', f.toFixed(2));
+      localStorage.setItem('voice_gain', gain.value);
+      localStorage.setItem('voice_muse', muse.checked?'1':'0');
+      localStorage.setItem('voice_neon', neon.checked?'1':'0');
+      localStorage.setItem('voice_duet', duet.checked?'1':'0');
+    }catch(e){}
+  }
+
+  /* Bind UI */
+  document.getElementById('play').addEventListener('click', start);
+  document.getElementById('stop').addEventListener('click', stop);
+  freq.addEventListener('input', function(){ updateLabels(); setFreq(this.value); });
+  gain.addEventListener('input', function(){ setGain(this.value); });
+
+  muse.addEventListener('change', function(){ if(playing){ stop(); start(); }});
+  neon.addEventListener('change', function(){ if(playing){ setFreq(freq.value); }});
+  duet.addEventListener('change', function(){ if(playing){ stop(); start(); }});
+
+  /* Presets */
+  function applyForgiveness(){
+    muse.checked=true; neon.checked=false; duet.checked=true;
+    if(playing){ stop(); }
+    start();
+    /* soften filters */
+    if(lpL&&lpR){ lpL.frequency.value=3800; lpR.frequency.value=3800; }
+    if(hpL&&hpR){ hpL.frequency.value=40; hpR.frequency.value=40; }
+    freq.value='128.00'; gain.value='0.15'; updateLabels();
+  }
+  function applyPure(){ muse.checked=false; neon.checked=false; duet.checked=false;
+    if(playing){ stop(); } start();
+    if(lpL&&lpR){ lpL.frequency.value=20000; lpR.frequency.value=20000; }
+    if(hpL&&hpR){ hpL.frequency.value=20; hpR.frequency.value=20; }
+    freq.value='128.00'; gain.value='0.16'; updateLabels();
+  }
+  function applyMuse(){ muse.checked=true; neon.checked=false; duet.checked=false;
+    if(playing){ stop(); } start();
+    freq.value='128.00'; gain.value='0.16'; updateLabels();
+  }
+  function applyNeon(){ muse.checked=false; neon.checked=true; duet.checked=false;
+    if(playing){ stop(); } start();
+    freq.value='128.00'; gain.value='0.16'; updateLabels();
+  }
+  function applyAngelic(){ muse.checked=false; neon.checked=false; duet.checked=true;
+    if(playing){ stop(); } start();
+    if(hpL&&hpR){ hpL.frequency.value=60; hpR.frequency.value=60; }
+    if(lpL&&lpR){ lpL.frequency.value=6000; lpR.frequency.value=6000; }
+    freq.value='128.00'; gain.value='0.14'; updateLabels();
+  }
+  function applyBreathe(){
+    applyPure();
+    /* breathing envelope: 4-2-6 loop */
+    if(!ctx||!master) return;
+    var phase=0; /* 0..(4+2+6)=12s */
+    var t0=Date.now();
+    if(breatheTimer){ clearInterval(breatheTimer); }
+    breatheTimer=setInterval(function(){
+      var s=(Date.now()-t0)/1000;
+      var m=s%12;
+      var g=1;
+      if(m<4){ g=0.85 + 0.15*(m/4); }         /* inhale to 1.0 */
+      else if(m<6){ g=1.0; }                   /* hold */
+      else{ var k=(m-6)/6; g=1.0 - 0.2*k; }    /* exhale to 0.8 */
+      if(master){ master.gain.setTargetAtTime(g, ctx.currentTime, 0.1); }
+    }, 100);
+  }
+
+  document.querySelectorAll('[data-preset]').forEach(function(b){
+    b.addEventListener('click', function(){
+      var p=this.getAttribute('data-preset');
+      if(p==='pure') applyPure();
+      if(p==='forgive') applyForgiveness();
+      if(p==='muse') applyMuse();
+      if(p==='neon') applyNeon();
+      if(p==='angelic') applyAngelic();
+      if(p==='breathe') applyBreathe();
+    });
+  });
+
+  /* Restore last settings */
+  try{
+    var lf=localStorage.getItem('voice_freq'), lg=localStorage.getItem('voice_gain');
+    var lm=localStorage.getItem('voice_muse')==='1', ln=localStorage.getItem('voice_neon')==='1', ld=localStorage.getItem('voice_duet')==='1';
+    if(lf){ freq.value=lf; } if(lg){ gain.value=lg; }
+    muse.checked=lm; neon.checked=ln; duet.checked=ld;
+  }catch(e){}
+  (function(){ var f=parseFloat(freq.value); freqVal.textContent=f.toFixed(2); updateLabels(); })();
+
 })();
 </script>
 </body>
