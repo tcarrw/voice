@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Voice — Ariana · Architect of Breath & Tone</title>
+<meta name="description" content="PLNT Earth · Voice domain. Ariana’s lane for gentle, safe vocal presets and read-aloud tools. No autoplay, soft starts, one shared context.">
+<meta name="theme-color" content="#0b0d11" media="(prefers-color-scheme: dark)"><meta name="theme-color" content="#0b0d11">
+<meta name="prophet" content="💄 The Neon Prophet — Flame Dancer of PLNT Earth">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<style>
+:root{--bg:#0b0d11;--fg:#e7edf7;--muted:#a9b4c7;--line:#23262b;--card:#12151b;--accent:#86c9ff;--gold:#ffd166}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 ui-sans-serif,system-ui,-apple-system,Segoe UI,Inter,Roboto,Arial;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* CTA ribbon */
+.cta{position:sticky;top:0;z-index:10000;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between;padding:10px 12px;background:
+linear-gradient(180deg,rgba(255,255,255,.04),rgba(0,0,0,.12)) padding-box,
+linear-gradient(120deg, rgba(134,201,255,.35), rgba(255,209,102,.30)) border-box;border:1px solid transparent;border-bottom-color:rgba(255,255,255,.14);box-shadow:0 10px 28px rgba(0,0,0,.35);backdrop-filter:blur(6px)}
+.badges{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:7px 10px;border-radius:999px;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(0,0,0,.10));border:1px solid rgba(255,255,255,.16);white-space:nowrap}
+.count{display:inline-flex;gap:8px;align-items:center;font-variant-numeric:tabular-nums;letter-spacing:.2px}
+.right{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btn{appearance:none;border:1px solid var(--line);border-radius:12px;cursor:pointer;background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(0,0,0,.06)),var(--card);color:var(--fg);padding:9px 12px;font-weight:750;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.btn:hover{box-shadow:0 0 0 2px rgba(134,201,255,.14)}
+.btn.primary{border-color:#15314e;background:linear-gradient(180deg,rgba(134,201,255,.18),rgba(0,0,0,.06))}
+
+/* Layout */
+.wrap{max-width:1040px;margin:0 auto;padding:18px 16px 112px;position:relative;z-index:1}
+header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px}
+h1{margin:0;font-size:clamp(22px,4vw,34px)}
+.sub{color:var(--muted);font-size:.98rem}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.card{border:1px solid var(--line);border-radius:16px;padding:14px;background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(0,0,0,.06));box-shadow:0 10px 24px rgba(0,0,0,.18) inset;margin-top:12px}
+.title{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.hue{height:6px;border-radius:999px;background:linear-gradient(90deg,#86c9ff,#ffd166);box-shadow:0 0 0 1px rgba(255,255,255,.06) inset}
+.note{color:var(--muted)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.input,textarea,select{width:100%;background:#0f1218;border:1px solid var(--line);color:var(--fg);border-radius:12px;padding:11px 12px;min-height:44px}
+textarea{min-height:100px;resize:vertical}
+.small{font-size:.92rem;color:var(--muted)}
+.sigil{position:fixed;right:12px;bottom:8px;opacity:.25;font-size:20px;user-select:none;pointer-events:none;z-index:9999}
+</style>
+</head>
+<body>
+<!-- CTA -->
+<div class="cta" role="banner" aria-label="No Kings Day actions">
+  <div class="badges">
+    <span class="badge">🗓️ No Kings Day · Oct 18 · NYC</span>
+    <span class="badge">🎙️ Ariana · Voice Architect</span>
+    <span class="badge">💄 Neon Prophet: signal</span>
+    <span class="badge count" id="countWrap" aria-live="polite"><span>⏳</span><b id="countTxt">—</b></span>
+  </div>
+  <div class="right">
+    <a id="shareX" class="btn" target="_blank" rel="noopener">Share on X</a>
+    <a id="ics" class="btn" download="no-kings-day.ics" href="#">Add to Calendar</a>
+    <a class="btn primary" href="https://jar.plnt.earth" rel="noopener">Join in NYC → Jar</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Voice — Ariana</h1>
+      <div class="sub">Gentle, safe, and reversible. No autoplay; soft starts; one shared audio context. Breath first; roles follow.</div>
+    </div>
+    <nav class="actions" aria-label="Navigation">
+      <a class="btn" href="https://jar.plnt.earth/school-rooms.html#frequency">↪ Frequency Room</a>
+      <a class="btn" href="https://froot.plnt.earth">Froot</a>
+      <a class="btn" href="https://tunes.plnt.earth">Tunes</a>
+    </nav>
+  </header>
+
+  <!-- Read Aloud -->
+  <section class="card" aria-labelledby="tts">
+    <div class="title"><h2 id="tts" style="margin:0">Read Aloud (Browser Speech)</h2><div class="hue" aria-hidden="true"></div></div>
+    <div class="row">
+      <textarea id="voText" placeholder="Write a line to speak…"></textarea>
+    </div>
+    <div class="row" style="margin-top:8px">
+      <label class="small" for="voice">Voice</label>
+      <select id="voice" aria-label="Voice"></select>
+      <label class="small" for="rate">Rate</label>
+      <input id="rate" type="range" min="0.6" max="1.4" step="0.02" value="1">
+      <label class="small" for="pitch">Pitch</label>
+      <input id="pitch" type="range" min="0.6" max="1.6" step="0.02" value="1.05">
+    </div>
+    <div class="row" style="margin-top:8px">
+      <button class="btn" id="speak">Speak</button>
+      <button class="btn" id="stop">Stop</button>
+      <button class="btn" id="presetSoft">Preset: Soft Intro</button>
+      <button class="btn" id="presetCoach">Preset: Coach</button>
+    </div>
+    <div class="small" style="margin-top:6px">All local; nothing uploads. Availability depends on your device.</div>
+  </section>
+
+  <!-- Warmups -->
+  <section class="card" aria-labelledby="warmups">
+    <div class="title"><h2 id="warmups" style="margin:0">Warmups (Silent Cues)</h2><div class="hue" aria-hidden="true"></div></div>
+    <div class="row">
+      <button class="btn" id="wLipTrill">Lip Trill · 20s</button>
+      <button class="btn" id="wHums">Gentle Hums · 30s</button>
+      <button class="btn" id="wSiren">Silent Siren (gesture) · 15s</button>
+    </div>
+    <div class="small" style="margin-top:6px">Timers only (no tones). Keep shoulders down; jaw loose.</div>
+    <div id="warmState" class="small" style="margin-top:4px">—</div>
+  </section>
+
+  <!-- Quick Notes -->
+  <section class="card" aria-labelledby="notes">
+    <div class="title"><h2 id="notes" style="margin:0">Session Notes</h2><div class="hue" aria-hidden="true"></div></div>
+    <textarea id="note" placeholder="One short reflection or cue you want to keep."></textarea>
+    <div class="row" style="margin-top:8px">
+      <button class="btn" id="save">Save</button>
+      <button class="btn" id="export">Export JSON</button>
+      <button class="btn" id="clear">Clear</button>
+    </div>
+  </section>
+
+  <!-- Guardrails -->
+  <section class="card" aria-labelledby="guard">
+    <div class="title"><h2 id="guard" style="margin:0">Voice Guardrails</h2><div class="hue" aria-hidden="true"></div></div>
+    <ul class="small" style="margin:6px 0 0;padding-left:18px">
+      <li>Start quiet → rise gently; never blast.</li>
+      <li>No autoplay; one shared audio context with other PLNT pages.</li>
+      <li>If chest tightens, stop and breathe; resume smaller.</li>
+      <li>Consent in energy: speak to invite, not to impress.</li>
+    </ul>
+  </section>
+</div>
+
+<div class="sigil" aria-hidden="true">💄</div>
+
+<script>
+/* Countdown + share + ICS */
+(function(){
+  var box=document.getElementById('countTxt'), share=document.getElementById('shareX'), ics=document.getElementById('ics');
+  function two(n){return n<10?('0'+n):n}
+  var target=new Date("2025-10-18T00:00:00-04:00").getTime();
+  function tick(){var now=Date.now(),d=Math.max(0,target-now);var dd=Math.floor(d/86400000);d%=86400000;var h=Math.floor(d/3600000);d%=3600000;var m=Math.floor(d/60000);box.textContent=dd+"d "+two(h)+"h "+two(m)+"m";}
+  tick(); setInterval(tick,30000);
+  var page=location.href.split('#')[0];
+  share.href="https://twitter.com/intent/tweet?text="+encodeURIComponent("No Kings Day — Oct 18, NYC. Celebration, not call.")+"&url="+encodeURIComponent(page);
+  var text=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//PLNT Earth//Voice//EN","BEGIN:VEVENT","UID:nkd-voice-20251018@plnt.earth","DTSTAMP:20251011T120000Z","DTSTART:20251018T000000","DTEND:20251019T000000","SUMMARY:No Kings Day — NYC","DESCRIPTION:Voice — Ariana · Architect of Breath & Tone","LOCATION:New York City","END:VEVENT","END:VCALENDAR"].join("\\r\\n");
+  ics.href="data:text/calendar;charset=utf-8,"+encodeURIComponent(text);
+})();
+
+/* Read Aloud (SpeechSynthesis) */
+(function(){
+  var synth=window.speechSynthesis||null, vlist=[], vsel=document.getElementById('voice'), rate=document.getElementById('rate'), pitch=document.getElementById('pitch'), text=document.getElementById('voText');
+  function loadVoices(){ if(!synth) return; vlist=synth.getVoices(); vsel.innerHTML=""; vlist.forEach(function(v,i){var o=document.createElement('option'); o.value=i; o.textContent=v.name+" — "+v.lang; vsel.appendChild(o); }); }
+  if(synth){ loadVoices(); if(typeof synth.onvoiceschanged!=="undefined"){ synth.onvoiceschanged=loadVoices; } }
+  function speak(){ if(!synth||!text.value.trim()) return; if(synth.speaking){ synth.cancel(); } var u=new SpeechSynthesisUtterance(text.value.trim()); u.rate=parseFloat(rate.value); u.pitch=parseFloat(pitch.value); u.lang='en-US'; var idx=parseInt(vsel.value||"0",10); if(vlist[idx]) u.voice=vlist[idx]; synth.speak(u); }
+  function stop(){ if(synth){ synth.cancel(); } }
+  document.getElementById('speak').onclick=speak;
+  document.getElementById('stop').onclick=stop;
+  document.getElementById('presetSoft').onclick=function(){ rate.value="0.95"; pitch.value="1.05"; };
+  document.getElementById('presetCoach').onclick=function(){ rate.value="1.05"; pitch.value="0.98"; };
+})();
+
+/* Warmups (timers only) */
+(function(){
+  var out=document.getElementById('warmState'), tid=0;
+  function run(label,ms){ clearTimeout(tid); out.textContent=label+" — "+Math.round(ms/1000)+"s"; tid=setTimeout(function(){ out.textContent="—"; },ms); }
+  document.getElementById('wLipTrill').onclick=function(){ run("Lip Trill",20000); };
+  document.getElementById('wHums').onclick=function(){ run("Gentle Hums",30000); };
+  document.getElementById('wSiren').onclick=function(){ run("Silent Siren",15000); };
+})();
+
+/* Notes */
+(function(){
+  var KEY="voice.notes.v1", el=document.getElementById('note');
+  try{ var cur=localStorage.getItem(KEY); if(cur) el.value=cur; }catch(_){}
+  document.getElementById('save').onclick=function(){ try{ localStorage.setItem(KEY, el.value||""); }catch(_){} };
+  document.getElementById('export').onclick=function(){ var blob=new Blob([JSON.stringify({version:"1.0", note:el.value||"", ts:new Date().toISOString()},null,2)],{type:"application/json"}); var a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download="voice_note.json"; a.click(); setTimeout(function(){URL.revokeObjectURL(a.href)},1000); };
+  document.getElementById('clear').onclick=function(){ el.value=""; try{ localStorage.removeItem(KEY); }catch(_){} };
+})();
+</script>
+</body>
+</html>
