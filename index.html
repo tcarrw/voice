@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Voice Room — Ariana v0.2 · Illumina (Froot Core Ready)</title>
+<title>Voice Room — Ariana v0.3 · Illumina (Froot Core Ready)</title>
 <meta name="theme-color" content="#0b0d11" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -216,9 +216,11 @@ $('#dSave').onclick=()=>{ const i=state.editingIndex; if(i==null) return; const 
 $('#dCancel').onclick=()=> $('#drawer').classList.remove('on');
 
 // Player
-let YT_API_READY=false; function onYouTubeIframeAPIReady(){ YT_API_READY=true; status($('#ytStatus'),true); buildPlayer(); }
-function buildPlayer(){ if(!YT_API_READY) return; if(state.player) return; state.player=new YT.Player('player',{height:'100%',width:'100%',videoId: state.list[0].yt || null, playerVars:{rel:0,modestbranding:1,playsinline:1}, events:{ onStateChange:(e)=>{ if(e.data===YT.PlayerState.ENDED) nextTrack(); } }}); }
-function loadVideoByIndex(i){ const it=state.list[i]; if(!it.yt){ openDrawer(i); alert('This track is missing a YouTube ID. Paste the 11-char ID in the drawer (right), then Save.'); return; } state.currentIndex=i; setToneHz(it.toneHz); document.body.style.setProperty('--accent', it.hex||'#f6d7e6'); state.player.loadVideoById(it.yt); }
+let YT_API_READY=false; let PLAYER_READY=false; function onYouTubeIframeAPIReady(){ YT_API_READY=true; status($('#ytStatus'),true); buildPlayer(); }
+function buildPlayer(){ if(!YT_API_READY) return; if(state.player) return; state.player=new YT.Player('player',{height:'100%',width:'100%',videoId: null, playerVars:{rel:0,modestbranding:1,playsinline:1}, events:{ onReady:()=>{ PLAYER_READY=true; }, onStateChange:(e)=>{ if(e.data===YT.PlayerState.ENDED) nextTrack(); } }}); }
+function ensurePlayerReady(cb){ if(PLAYER_READY && state.player) return cb(); const h=setInterval(()=>{ if(PLAYER_READY && state.player){ clearInterval(h); cb(); } }, 50); setTimeout(()=> clearInterval(h), 4000); }
+function loadVideoByIndex(i){ const it=state.list[i]; if(!it.yt){ openDrawer(i); alert('This track is missing a YouTube ID. Paste the 11-char ID in the drawer (right), then Save.'); return; } state.currentIndex=i; setToneHz(it.toneHz); document.body.style.setProperty('--accent', it.hex||'#f6d7e6'); ensurePlayerReady(()=>{ state.player.loadVideoById(it.yt); state.player.playVideo(); }); }
+function (i){ const it=state.list[i]; if(!it.yt){ openDrawer(i); alert('This track is missing a YouTube ID. Paste the 11-char ID in the drawer (right), then Save.'); return; } state.currentIndex=i; setToneHz(it.toneHz); document.body.style.setProperty('--accent', it.hex||'#f6d7e6'); state.player.loadVideoById(it.yt); }
 function playIndex(i){ if(!state.player) buildPlayer(); loadVideoByIndex(i); }
 function nextTrack(){ const n=state.currentIndex+1; const next= n<state.list.length? n : (state.loop? 0:null); if(next==null) return; loadVideoByIndex(next); }
 function prevTrack(){ const p=state.currentIndex-1; const prev= p>=0? p : (state.loop? state.list.length-1:null); if(prev==null) return; loadVideoByIndex(prev); }
@@ -228,7 +230,7 @@ $('#exportBtn').onclick = ()=>{ const lean=state.list.map(({artist,title,yt,hex,
 $('#saveAll').onclick = ()=> renderList();
 $('#fileIn').onchange = e=>{ const f=e.target.files?.[0]; if(!f) return; const fr=new FileReader(); fr.onload=()=>{ try{ const data=JSON.parse(fr.result); if(!Array.isArray(data)) throw new Error('Expected an array'); const byTitle=new Map(state.list.map(x=>[x.title.toLowerCase(),x])); data.forEach(it=>{ if(it&&it.title){ byTitle.set(it.title.toLowerCase(), {...byTitle.get(it.title.toLowerCase()), ...it}); } }); state.list=Array.from(byTitle.values()); renderList(); }catch(err){ alert('Import error: '+err.message); } }; fr.readAsText(f); e.target.value=''; };
 $('#loopBtn').onclick=()=>{ state.loop=!state.loop; updateQueueBadge(); };
-$('#prevBtn').onclick=prevTrack; $('#nextBtn').onclick=nextTrack; $('#playBtn').onclick=()=>{ if(state.list[state.currentIndex].yt){ loadVideoByIndex(state.currentIndex);} else { openDrawer(state.currentIndex); } }; $('#pauseBtn').onclick=()=> state.player && state.player.pauseVideo();
+$('#prevBtn').onclick=prevTrack; $('#nextBtn').onclick=nextTrack; $('#playBtn').onclick=()=>{ ensurePlayerReady(()=>{ if(state.list[state.currentIndex].yt){ loadVideoByIndex(state.currentIndex); } else { openDrawer(state.currentIndex); } }); }; $('#pauseBtn').onclick=()=> state.player && state.player.pauseVideo();
 
 $('#toneToggle').onclick=toggleTone; $('#toneGain').oninput=e=> setToneLevelFromSlider(Number(e.target.value));
 
