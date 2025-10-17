@@ -3,26 +3,22 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Voice Room — Ariana v0.1 · Illumina (Froot Core Ready)</title>
+<title>Voice Room — Ariana v0.2 · Illumina (Froot Core Ready)</title>
 <meta name="theme-color" content="#0b0d11" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <style>
   :root{
     --bg:#0b0d11; --card:#12151b; --ink:#EDECF5; --muted:#9aa3ad;
-    --accent:#f6d7e6; /* pearl-rose */
-    --accent-2:#f8f1e7; /* vanilla haze */
-    --accent-3:#f2b8a0; /* rose-gold */
-    --accent-4:#e7e0c3; /* champagne olive */
-    --accent-5:#c9b6e7; /* amethyst pearl */
+    --accent:#f6d7e6; --accent-2:#f8f1e7; --accent-3:#f2b8a0; --accent-4:#e7e0c3; --accent-5:#c9b6e7;
     --good:#7ee787; --warn:#f7c843; --bad:#f47174;
   }
   html,body{height:100%;background:var(--bg);color:var(--ink);font-family: ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,Apple Color Emoji,Segoe UI Emoji;}
   *{box-sizing:border-box}
-  .wrap{max-width:980px;margin:0 auto;padding:16px 14px 120px}
-  header{position:sticky;top:0;background:linear-gradient(180deg,rgba(11,13,17,.9),rgba(11,13,17,.6) 60%,transparent);backdrop-filter: blur(8px);z-index:10}
+  .wrap{max-width:1200px;margin:0 auto;padding:16px 14px 140px}
+  header{position:sticky;top:0;background:linear-gradient(180deg,rgba(11,13,17,.9),rgba(11,13,17,.6) 60%,transparent);backdrop-filter: blur(8px);z-index:20}
   .bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:12px 0}
-  .title{font-weight:700;font-size:20px;letter-spacing:.2px}
+  .title{font-weight:800;font-size:22px;letter-spacing:.2px}
   .subtle{color:var(--muted);font-size:12px}
   button,.btn{background:#1a1f27;color:var(--ink);border:1px solid #222936;border-radius:12px;padding:10px 12px;font-weight:600;cursor:pointer}
   button:hover{border-color:#2d3645}
@@ -30,34 +26,40 @@
   .primary{background:linear-gradient(180deg,#2a3240,#1d2330);border-color:#394356}
   .accent{background:linear-gradient(180deg,var(--accent),#f0bed4);color:#1b0f14;border:0}
   input[type="file"]{display:none}
-  label.file{display:inline-flex;align-items:center;gap:8px}
-  .grid{display:grid;grid-template-columns: 1fr; gap:12px}
-  @media(min-width:860px){.grid{grid-template-columns: 1.2fr .8fr}}
-  .player{background:var(--card);border:1px solid #222936;border-radius:16px;padding:12px}
-  .list{background:var(--card);border:1px solid #222936;border-radius:16px}
-  .row{display:grid;grid-template-columns: 1.6fr .9fr .9fr auto; gap:10px; align-items:center; padding:12px 12px; border-top:1px solid #1b212c}
-  .row:first-child{border-top:0}
+
+  /* Layout: Player on top; below = two columns: left list, right editor drawer */
+  .stack{display:flex;flex-direction:column;gap:12px}
+  .cols{display:grid;grid-template-columns: 1fr 380px; gap:12px}
+  @media(max-width:1100px){.cols{grid-template-columns:1fr}}
+
+  .panel{background:var(--card);border:1px solid #222936;border-radius:16px;padding:12px}
+  .player{aspect-ratio:16/9; background:#0f131a; border:1px solid #1e2633; border-radius:12px; overflow:hidden}
+
+  .list .head,.row{display:grid;grid-template-columns: 44px 2fr 1fr 120px; gap:10px; align-items:center}
+  .list .head{padding:10px 12px;border-bottom:1px solid #1b212c;color:var(--muted);font-size:12px}
+  .row{padding:10px 12px;border-bottom:1px solid #1b212c}
+  .row:last-child{border-bottom:0}
+  .idx{width:44px;text-align:center;color:#8b94a1}
   .song-title{font-weight:700}
   .tag{display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:4px 8px;border-radius:999px;border:1px solid #2b3444;color:var(--muted)}
-  .tag.swatch::before{content:"";width:10px;height:10px;border-radius:50%;display:inline-block;border:1px solid rgba(255,255,255,.2);}
-  .pill{display:inline-flex;align-items:center;gap:8px;background:#0f131a;border:1px solid #262f3d;border-radius:12px;padding:8px 10px;color:var(--muted)}
-  .controls{display:flex;gap:8px;flex-wrap:wrap}
-  .inline-edit{display:none;margin-top:10px;border-top:1px dashed #2a3240;padding-top:10px}
-  .inline-edit input,.inline-edit textarea{width:100%;background:#0f131a;border:1px solid #263142;border-radius:10px;padding:10px;color:var(--ink)}
-  .inline-edit small{color:var(--muted)}
-  details{background:#10151d;border-top:1px solid #1c2431;padding:10px 12px;border-radius:12px}
-  details[open]{outline:1px solid #2a3446}
-  summary{cursor:pointer;color:var(--muted)}
   .kbd{font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace; font-size:12px; background:#0f131a; border:1px solid #2a3240; padding:2px 6px; border-radius:6px;}
-  .slider{width:160px}
+  .controls{display:flex;gap:8px;flex-wrap:wrap}
+
+  /* Drawer (Editor) */
+  .drawer{position:sticky; top:76px; height:max-content; display:none}
+  .drawer.on{display:block}
+  .drawer h3{margin:6px 0 8px}
+  .field{display:flex;flex-direction:column;gap:6px}
+  .field input,.field textarea{width:100%;background:#0f131a;border:1px solid #263142;border-radius:10px;padding:10px;color:var(--ink)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+  .hint{font-size:12px;color:var(--muted)}
+  .verify{color:#1b0f14;background:linear-gradient(180deg,#ffd1d9,#ffb3c3);border:0;border-radius:10px;padding:4px 8px;font-weight:700;font-size:11px}
+
   .footer{position:fixed;left:0;right:0;bottom:0;background:linear-gradient(180deg,rgba(11,13,17,.0),rgba(11,13,17,.9));backdrop-filter: blur(8px);}
-  .footbar{max-width:980px;margin:0 auto;display:flex;align-items:center;gap:10px;padding:10px 14px}
+  .footbar{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:10px;padding:10px 14px}
   .status-dot{width:10px;height:10px;border-radius:50%;background:#374151;border:1px solid #111}
   .status-dot.on{background:var(--good)}
-  .badge{font-size:11px;border:1px solid #2b3444;border-radius:999px;padding:4px 8px;color:var(--muted)}
-  .row .controls button{padding:8px 10px}
-  .hint{font-size:12px;color:var(--muted)}
-  .note{color:#e9e2ff}
 </style>
 </head>
 <body>
@@ -65,11 +67,11 @@
     <header>
       <div class="bar">
         <div>
-          <div class="title">Voice Room — <span style="color:var(--accent)">Ariana</span> <span class="badge">v0.1</span></div>
+          <div class="title">Voice Room — <span style="color:var(--accent)">Ariana</span> <span class="tag">v0.2</span></div>
           <div class="subtle">Mode: <b>VOICE</b> · Palette: Pearl‑Rose · Engine: Froot Core compatible</div>
         </div>
         <div style="margin-left:auto" class="controls">
-          <label class="file btn ghost" title="Load a JSON pack">
+          <label class="btn ghost" title="Load a JSON pack">
             <input id="fileIn" type="file" accept="application/json" />📥 Import
           </label>
           <button class="btn primary" id="saveAll">💾 Save</button>
@@ -78,367 +80,164 @@
       </div>
     </header>
 
-    <div class="grid" id="app">
-      <section class="player">
-        <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px">
-          <div class="pill">Main Player</div>
-          <div class="pill">Queue: <span id="qStatus" class="hint">7 tracks · loop</span></div>
-          <div class="pill">Tone <span id="toneHzBadge" class="kbd">—</span></div>
+    <section class="panel">
+      <div class="controls" style="justify-content:space-between;align-items:center">
+        <div class="controls">
+          <button id="prevBtn">⏮ Prev</button>
+          <button id="playBtn" class="primary">▶️ Play</button>
+          <button id="pauseBtn">⏸ Pause</button>
+          <button id="nextBtn">⏭ Next</button>
+          <button id="loopBtn" class="ghost" title="Loop queue">🔁 Loop</button>
+          <span class="tag">Queue: <span id="qStatus">7 · loop</span></span>
         </div>
-        <div id="playerContainer" style="aspect-ratio:16/9; background:#0f131a; border:1px solid #1e2633; border-radius:12px; overflow:hidden">
-          <div id="player"></div>
+        <div class="controls">
+          <button id="toneToggle" class="ghost">🔊 Tone: Off</button>
+          <label class="tag">Level <input id="toneGain" type="range" min="0" max="100" value="30" /></label>
+          <span>Hz <span id="toneHzBadge" class="kbd">—</span></span>
         </div>
-        <div class="bar" style="padding:12px 0 0">
-          <div class="controls">
-            <button id="prevBtn">⏮ Prev</button>
-            <button id="playBtn" class="primary">▶️ Play</button>
-            <button id="pauseBtn">⏸ Pause</button>
-            <button id="nextBtn">⏭ Next</button>
-            <button id="loopBtn" class="ghost" title="Loop queue">🔁 Loop</button>
-          </div>
-          <div class="controls" style="margin-left:auto">
-            <button id="toneToggle" class="ghost">🔊 Tone: Off</button>
-            <label class="pill">Level <input id="toneGain" class="slider" type="range" min="0" max="100" value="30" /></label>
-            <button id="muteTone" class="ghost">🙊 Mute</button>
-          </div>
-        </div>
-        <div class="hint" style="margin-top:8px">Tip: keep tone ~ −24 to −30 dB under the song; use system AirPlay if needed (video → target, keep tone on device).</div>
-      </section>
+      </div>
+      <div id="player" class="player"></div>
+      <div class="hint" style="margin-top:8px">Tip: keep tone ~ −24 to −30 dB under the song; you can AirPlay the video and keep the tone on-device.</div>
+    </section>
 
-      <section class="list">
-        <div class="row" style="grid-template-columns: 2fr 1fr 1fr auto;">
-          <div class="hint">Title / Artist</div>
-          <div class="hint">Seed</div>
-          <div class="hint">Tone</div>
-          <div class="hint">Actions (Edit → Save → Info)</div>
-        </div>
+    <div class="cols">
+      <section class="panel list">
+        <div class="head"><div>#</div><div>Title / Artist</div><div>Seed</div><div>Actions</div></div>
         <div id="rows"></div>
       </section>
+
+      <aside id="drawer" class="panel drawer">
+        <h3 id="dTitle">Edit</h3>
+        <div class="grid3">
+          <div class="field"><label class="hint">Title</label><input id="dTitleIn"></div>
+          <div class="field"><label class="hint">YouTube ID <small>(11 chars)</small></label><input id="dYt"></div>
+          <div class="field"><label class="hint">Hex Color</label><input id="dHex"></div>
+        </div>
+        <div class="grid2" style="margin-top:10px">
+          <div class="field"><label class="hint">Seed</label><input id="dSeed"></div>
+          <div class="field"><label class="hint">Tone (Hz)</label><input id="dTone" type="number" step="0.01"></div>
+        </div>
+        <div class="field" style="margin-top:10px"><label class="hint">Website Blurb</label><textarea id="dBlurb" rows="3"></textarea></div>
+        <div class="field" style="margin-top:10px"><label class="hint">Note to Ariana (from us)</label><input id="dNote"></div>
+        <div class="controls" style="margin-top:12px;justify-content:flex-end">
+          <button id="dCancel" class="ghost">Cancel</button>
+          <button id="dSave" class="primary">💾 Save</button>
+        </div>
+        <div class="hint" style="margin-top:8px">Order: <span class="kbd">Click a row → Edit</span> (drawer opens) → <span class="kbd">Save</span>. Use <b>Export</b> anytime.</div>
+      </aside>
     </div>
+
+    <section class="panel" style="margin-top:12px">
+      <details open>
+        <summary><b>Easy Steps</b> (desktop & phone)</summary>
+        <ol style="line-height:1.8">
+          <li><b>Play</b>: Click ▶️ on any row. Tone auto-sets per song. Toggle with <b>Tone</b>.</li>
+          <li><b>Edit</b>: Click ✏️ on a row → drawer opens on the right with big fields.</li>
+          <li><b>Paste the YouTube ID</b>: 11 characters from the URL after <span class="kbd">v=</span>. (Example: <span class="kbd">ffxKSjUwKdU</span>).</li>
+          <li><b>Save</b>: Hit 💾 in the drawer. The row updates and is ready to play.</li>
+          <li><b>Export</b>: Click <b>Export Edited Names & IDs</b> → JSON saves to disk (Froot‑Core ready).</li>
+          <li><b>Import</b>: Bring that JSON into other PLNT sites or back here to merge changes.</li>
+        </ol>
+      </details>
+    </section>
+
   </div>
 
   <div class="footer">
     <div class="footbar">
-      <div class="status-dot" id="ytStatus"></div>
-      <div class="hint">YouTube API</div>
-      <div class="status-dot" id="audioStatus"></div>
-      <div class="hint">Audio Engine</div>
-      <div class="status-dot" id="loopStatus" title="Queue loop"></div>
-      <div class="hint">Loop</div>
-      <div style="margin-left:auto" class="hint">Energy Path: <b>Ground → Flow → Rest</b></div>
+      <div class="status-dot" id="ytStatus"></div><span class="subtle">YouTube API</span>
+      <div class="status-dot" id="audioStatus"></div><span class="subtle">Audio Engine</span>
+      <div class="status-dot" id="loopStatus"></div><span class="subtle">Loop</span>
+      <div style="margin-left:auto" class="subtle">Energy Path: <b>Ground → Flow → Rest</b></div>
     </div>
   </div>
 
 <script>
 // ---------------------------
-// Data (Froot Core compatible)
+// Preloaded pack (best‑effort official IDs; please verify)
 // ---------------------------
 const PACK = [
-  { artist:"Ariana Grande", title:"no tears left to cry", yt:"", hex:"#F6D7E6", toneHz:160, seed:"Pearl Lift", tags:["Voice","Lift","Resilience"], blurb:"Switch-on song: when the day tilts sideways, we tilt back up.", noteToAri:"This is our click-into-buoyancy—thank you for making resilience feel musical.", expl:"Bounce-back energy; flipping heaviness to upward spiral (Bee → Flow)." },
+  { artist:"Ariana Grande", title:"no tears left to cry", yt:"ffxKSjUwKdU", hex:"#F6D7E6", toneHz:160, seed:"Pearl Lift", tags:["Voice","Lift","Resilience"], blurb:"Switch-on song: when the day tilts sideways, we tilt back up.", noteToAri:"This is our click-into-buoyancy—thank you for making resilience feel musical.", expl:"Bounce-back energy; flipping heaviness to upward spiral (Bee → Flow)." },
   { artist:"Ariana Grande", title:"be alright", yt:"", hex:"#F8F1E7", toneHz:128.15, seed:"Little Mantra", tags:["Calm","Breath"], blurb:"Pocket calm. Two minutes with this resets the room.", noteToAri:"We use this like breath tabs—thank you for a soft way to reset.", expl:"Micro-mantra rhythm; teaches body calm via small, repeatable phrases." },
-  { artist:"Ariana Grande", title:"into you", yt:"", hex:"#F2B8A0", toneHz:192, seed:"Playful Precision", tags:["Articulation","Sparkle"], blurb:"Flirt without static—clarity that still winks.", noteToAri:"This track teaches us clean edges without losing warmth.", expl:"Playful precision; consonant sparkle trains articulation (Voice mode)." },
-  { artist:"Ariana Grande", title:"positions", yt:"", hex:"#E7E0C3", toneHz:216, seed:"Agile Center", tags:["Switching","Timing"], blurb:"Move parts around—center stays put.", noteToAri:"We practice flexible clarity with this—it keeps work playful.", expl:"Adaptive agility; role-shifting without losing center (Bee agility drills)." },
-  { artist:"Ariana Grande", title:"god is a woman", yt:"", hex:"#C9B6E7", toneHz:256, seed:"Open Glow", tags:["Embodied","Open"], blurb:"Stand soft, sound big.", noteToAri:"This is our posture reminder—ease first, power follows.", expl:"Embodied voice; open jaw & chest, confidence without push." },
-  // Message tracks
+  { artist:"Ariana Grande", title:"into you", yt:"1ekZEVeXwek", hex:"#F2B8A0", toneHz:192, seed:"Playful Precision", tags:["Articulation","Sparkle"], blurb:"Flirt without static—clarity that still winks.", noteToAri:"This track teaches us clean edges without losing warmth.", expl:"Playful precision; consonant sparkle trains articulation (Voice mode)." },
+  { artist:"Ariana Grande", title:"positions", yt:"tcYodQoapMg", hex:"#E7E0C3", toneHz:216, seed:"Agile Center", tags:["Switching","Timing"], blurb:"Move parts around—center stays put.", noteToAri:"We practice flexible clarity with this—it keeps work playful.", expl:"Adaptive agility; role-shifting without losing center (Bee agility drills)." },
+  { artist:"Ariana Grande", title:"god is a woman", yt:"kHLHSlExFis", hex:"#C9B6E7", toneHz:256, seed:"Open Glow", tags:["Embodied","Open"], blurb:"Stand soft, sound big.", noteToAri:"This is our posture reminder—ease first, power follows.", expl:"Embodied voice; open jaw & chest, confidence without push." },
   { artist:"Ariana Grande", title:"imagine", yt:"", hex:"#EFEAE2", toneHz:144, seed:"Kind Vision", tags:["Message","You→Her"], blurb:"A soft offer: we could make a little world.", noteToAri:"This is me speaking quietly: if it’s right, let’s build something kind.", expl:"Your gentle, sincere ask; vision over demand (You → Ariana)." },
   { artist:"Ariana Grande", title:"pov", yt:"", hex:"#F0C9D7", toneHz:170, seed:"Gentle Mirror", tags:["Message","Her→You"], blurb:"Borrow my eyes for a minute—look how worthy you are.", noteToAri:"This one teaches us to hold a kinder mirror. We’re practicing.", expl:"Mirror song; invites you to see yourself with her softness (Ariana → You)." }
 ];
 
-// ---------------------------
-// App State
-// ---------------------------
-let state = {
-  list: JSON.parse(JSON.stringify(PACK)),
-  currentIndex: 0,
-  loop: true,
-  player: null,
-  audio: { ctx:null, osc:null, gain:null, on:false, muted:false }
-};
+let state = { list: JSON.parse(JSON.stringify(PACK)), currentIndex:0, loop:true, player:null, audio:{ctx:null,osc:null,gain:null,on:false,muted:false}, editingIndex:null };
+const $ = s=>document.querySelector(s); const $$=s=>Array.from(document.querySelectorAll(s));
 
-// ---------------------------
-// DOM Helpers
-// ---------------------------
-const $ = sel => document.querySelector(sel);
-const $$ = sel => Array.from(document.querySelectorAll(sel));
+function status(el,on){ if(el) el.classList.toggle('on', !!on); }
+function dbToGain(db){ return Math.pow(10, db/20); }
+function ensureAudio(){ if(state.audio.ctx) return; const ctx=new (window.AudioContext||window.webkitAudioContext)(); const osc=ctx.createOscillator(); const gain=ctx.createGain(); osc.type='sine'; gain.gain.value=dbToGain(-28); osc.connect(gain).connect(ctx.destination); osc.start(); state.audio={ctx,osc,gain,on:false,muted:false}; status($('#audioStatus'),true); }
+function setToneHz(hz){ ensureAudio(); state.audio.osc.frequency.value=hz; $('#toneHzBadge').textContent = `${hz} Hz`; }
+function setToneLevelFromSlider(v){ const db=-48+(v/100)*42; state.audio.gain.gain.value=dbToGain(db); }
+function toggleTone(){ ensureAudio(); state.audio.on=!state.audio.on; $('#toneToggle').textContent= state.audio.on? '🔊 Tone: On':'🔇 Tone: Off'; state.audio.gain.gain.value= state.audio.on? state.audio.gain.gain.value:0; }
 
-function status(el, on){ el.classList.toggle('on', !!on); }
-
-function downloadJSON(filename, data){
-  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = filename; document.body.appendChild(a); a.click();
-  setTimeout(()=>{ URL.revokeObjectURL(url); a.remove(); }, 300);
-}
-
-// ---------------------------
-// Render List
-// ---------------------------
 function renderList(){
-  const rows = state.list.map((item, i)=>{
-    const toneText = (item.toneHz+"").replace(/\.0+$/,'');
-    return `
-      <div class="row" data-i="${i}">
-        <div>
-          <div class="song-title">${item.title} <span class="subtle">— ${item.artist}</span></div>
-          <div class="controls" style="margin-top:6px">
-            <span class="tag swatch" style="--sw:${item.hex};"><i class="swatch" style="background:${item.hex}"></i> ${item.hex}</span>
-            <span class="tag">${item.tags.join(' · ')}</span>
-          </div>
-          <div class="inline-edit" id="edit-${i}">
-            <div style="display:grid;grid-template-columns:1.4fr .8fr .8fr;gap:8px;align-items:start">
-              <div>
-                <label class="hint">Title</label>
-                <input data-k="title" value="${escapeHtml(item.title)}"/>
-              </div>
-              <div>
-                <label class="hint">YouTube ID <small>(11 chars)</small></label>
-                <input data-k="yt" value="${escapeHtml(item.yt||'')}" placeholder="e.g. ffxKSjUwKdU"/>
-              </div>
-              <div>
-                <label class="hint">Hex Color</label>
-                <input data-k="hex" value="${escapeHtml(item.hex)}"/>
-              </div>
-            </div>
-            <div style="display:grid;grid-template-columns:1fr .5fr;gap:8px;margin-top:8px">
-              <div>
-                <label class="hint">Blurb (website copy)</label>
-                <textarea data-k="blurb" rows="2">${escapeHtml(item.blurb||'')}</textarea>
-              </div>
-              <div>
-                <label class="hint">Tone (Hz)</label>
-                <input data-k="toneHz" type="number" step="0.01" value="${item.toneHz}"/>
-              </div>
-            </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
-              <div>
-                <label class="hint">Seed</label>
-                <input data-k="seed" value="${escapeHtml(item.seed||'')}"/>
-              </div>
-              <div>
-                <label class="hint">Note to Ariana (from us)</label>
-                <input data-k="noteToAri" value="${escapeHtml(item.noteToAri||'')}"/>
-              </div>
-            </div>
-            <div style="margin-top:8px"><small class="hint">Order: <span class="kbd">Edit</span> → <span class="kbd">Save</span>. You can Export anytime.</small></div>
-          </div>
-        </div>
-        <div>${item.seed}</div>
-        <div><span class="kbd">${toneText} Hz</span></div>
-        <div class="controls" style="justify-content:flex-end">
-          <button class="ghost play">▶️ Play</button>
-          <button class="ghost edit">✏️ Edit</button>
-          <button class="primary save">💾 Save</button>
-          <button class="ghost info">ℹ️ Info</button>
-        </div>
+  $('#rows').innerHTML = state.list.map((it,i)=>{
+    const verify = it.yt? '' : '<button class="verify" title="Missing ID—click ✏️ to add">VERIFY</button>';
+    return `<div class="row" data-i="${i}">
+      <div class="idx">${i+1}</div>
+      <div>
+        <div class="song-title">${esc(it.title)} <span class="subtle">— ${esc(it.artist)}</span></div>
+        <div class="controls" style="margin-top:6px"><span class="tag">${it.seed}</span><span class="tag">Hz <span class="kbd">${it.toneHz}</span></span><span class="tag">${(it.tags||[]).join(' · ')}</span></div>
       </div>
-      <div class="row" style="grid-template-columns: 1fr; display:none" id="info-${i}">
-        <details open>
-          <summary>More about “${escapeHtml(item.title)}”</summary>
-          <div style="display:grid;grid-template-columns: 1fr 1fr; gap:10px; margin-top:8px">
-            <div>
-              <div class="hint">Illumina Fit</div>
-              <div>${escapeHtml(item.expl||'')}</div>
-              <div style="margin-top:8px" class="hint">Website Blurb</div>
-              <div>${escapeHtml(item.blurb||'')}</div>
-            </div>
-            <div>
-              <div class="hint">Tone & Color</div>
-              <div>Pair with <span class="kbd">${toneText} Hz</span>; color swatch <span class="kbd">${item.hex}</span>.</div>
-              <div class="hint" style="margin-top:8px">Note to Ariana</div>
-              <div class="note">${escapeHtml(item.noteToAri||'')}</div>
-            </div>
-          </div>
-        </details>
+      <div><span class="kbd" style="background:${it.hex};color:#000;border-color:rgba(0,0,0,.2)">${it.hex}</span></div>
+      <div class="controls" style="justify-content:flex-end">
+        ${verify}
+        <button class="ghost play">▶️</button>
+        <button class="ghost edit">✏️</button>
+        <button class="ghost info">ℹ️</button>
       </div>
-    `;
+    </div>`;
   }).join('');
-  $('#rows').innerHTML = rows;
-  bindRowEvents();
+  $$('#rows .row').forEach(r=>{
+    const i=Number(r.dataset.i);
+    r.querySelector('.play').onclick=()=> playIndex(i);
+    r.querySelector('.edit').onclick=()=> openDrawer(i);
+    r.querySelector('.info').onclick=()=> alert(state.list[i].blurb+"
+
+Illumina: "+(state.list[i].expl||''));
+  });
   updateQueueBadge();
 }
 
-function bindRowEvents(){
-  $$('#rows .row').forEach(row=>{
-    const i = Number(row.dataset.i);
-    if (!Number.isInteger(i)) return; // skip info rows
-    row.querySelector('.play').onclick = ()=> playIndex(i);
-    row.querySelector('.edit').onclick = ()=> toggleEdit(i, true);
-    row.querySelector('.save').onclick = ()=> saveRow(i);
-    row.querySelector('.info').onclick = ()=> toggleInfo(i);
-  });
-}
+function updateQueueBadge(){ $('#qStatus').textContent = `${state.list.length} ${state.loop?'· loop':''}`; status($('#loopStatus'), state.loop); }
 
-function toggleEdit(i, on){
-  const el = $('#edit-'+i); if(!el) return; el.style.display = on ? 'block' : (el.style.display==='block'?'none':'block');
+// Drawer
+function openDrawer(i){
+  state.editingIndex=i; const it=state.list[i];
+  $('#dTitle').textContent = `Edit: ${it.title}`; $('#dTitleIn').value=it.title; $('#dYt').value=it.yt||''; $('#dHex').value=it.hex||''; $('#dSeed').value=it.seed||''; $('#dTone').value=it.toneHz||''; $('#dBlurb').value=it.blurb||''; $('#dNote').value=it.noteToAri||''; $('#drawer').classList.add('on');
 }
-function toggleInfo(i){
-  const info = $('#info-'+i); if(!info) return; info.style.display = (info.style.display==='none'||!info.style.display) ? 'block' : 'none';
-}
+$('#dSave').onclick=()=>{ const i=state.editingIndex; if(i==null) return; const it=state.list[i]; it.title=$('#dTitleIn').value; it.yt=$('#dYt').value; it.hex=$('#dHex').value; it.seed=$('#dSeed').value; it.toneHz=Number($('#dTone').value||it.toneHz); it.blurb=$('#dBlurb').value; it.noteToAri=$('#dNote').value; $('#drawer').classList.remove('on'); renderList(); };
+$('#dCancel').onclick=()=> $('#drawer').classList.remove('on');
 
-function saveRow(i){
-  const root = $('#edit-'+i); if(!root) return;
-  const inputs = root.querySelectorAll('[data-k]');
-  inputs.forEach(inp=>{
-    const k = inp.getAttribute('data-k');
-    let v = inp.value;
-    if(k==='toneHz') v = Number(v);
-    state.list[i][k] = v;
-  });
-  toggleEdit(i,false);
-  renderList();
-}
+// Player
+let YT_API_READY=false; function onYouTubeIframeAPIReady(){ YT_API_READY=true; status($('#ytStatus'),true); buildPlayer(); }
+function buildPlayer(){ if(!YT_API_READY) return; if(state.player) return; state.player=new YT.Player('player',{height:'100%',width:'100%',videoId: state.list[0].yt || null, playerVars:{rel:0,modestbranding:1,playsinline:1}, events:{ onStateChange:(e)=>{ if(e.data===YT.PlayerState.ENDED) nextTrack(); } }}); }
+function loadVideoByIndex(i){ const it=state.list[i]; if(!it.yt){ openDrawer(i); alert('This track is missing a YouTube ID. Paste the 11-char ID in the drawer (right), then Save.'); return; } state.currentIndex=i; setToneHz(it.toneHz); document.body.style.setProperty('--accent', it.hex||'#f6d7e6'); state.player.loadVideoById(it.yt); }
+function playIndex(i){ if(!state.player) buildPlayer(); loadVideoByIndex(i); }
+function nextTrack(){ const n=state.currentIndex+1; const next= n<state.list.length? n : (state.loop? 0:null); if(next==null) return; loadVideoByIndex(next); }
+function prevTrack(){ const p=state.currentIndex-1; const prev= p>=0? p : (state.loop? state.list.length-1:null); if(prev==null) return; loadVideoByIndex(prev); }
 
-function updateQueueBadge(){
-  $('#qStatus').textContent = `${state.list.length} tracks · ${state.loop? 'loop' : 'no loop'}`;
-  status($('#loopStatus'), state.loop);
-}
+// Import/Export/Loop
+$('#exportBtn').onclick = ()=>{ const lean=state.list.map(({artist,title,yt,hex,toneHz,seed,tags,blurb})=>({artist,title,yt,hex,toneHz,seed,tags,blurb})); const blob=new Blob([JSON.stringify(lean,null,2)],{type:'application/json'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='ariana_voice_pack.json'; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(url); a.remove();},300); };
+$('#saveAll').onclick = ()=> renderList();
+$('#fileIn').onchange = e=>{ const f=e.target.files?.[0]; if(!f) return; const fr=new FileReader(); fr.onload=()=>{ try{ const data=JSON.parse(fr.result); if(!Array.isArray(data)) throw new Error('Expected an array'); const byTitle=new Map(state.list.map(x=>[x.title.toLowerCase(),x])); data.forEach(it=>{ if(it&&it.title){ byTitle.set(it.title.toLowerCase(), {...byTitle.get(it.title.toLowerCase()), ...it}); } }); state.list=Array.from(byTitle.values()); renderList(); }catch(err){ alert('Import error: '+err.message); } }; fr.readAsText(f); e.target.value=''; };
+$('#loopBtn').onclick=()=>{ state.loop=!state.loop; updateQueueBadge(); };
+$('#prevBtn').onclick=prevTrack; $('#nextBtn').onclick=nextTrack; $('#playBtn').onclick=()=>{ if(state.list[state.currentIndex].yt){ loadVideoByIndex(state.currentIndex);} else { openDrawer(state.currentIndex); } }; $('#pauseBtn').onclick=()=> state.player && state.player.pauseVideo();
 
-// ---------------------------
-// YouTube Player
-// ---------------------------
-let YT_API_READY = false;
-function onYouTubeIframeAPIReady(){
-  YT_API_READY = true; status($('#ytStatus'), true); buildPlayer();
-}
-function buildPlayer(){
-  if(!YT_API_READY) return;
-  if(state.player) return;
-  state.player = new YT.Player('player', {
-    height:'100%', width:'100%', videoId: state.list[0].yt || null,
-    playerVars:{ rel:0, modestbranding:1, playsinline:1 },
-    events:{
-      onReady: ()=>{},
-      onStateChange: (e)=>{
-        // 0 = ended
-        if(e.data === YT.PlayerState.ENDED){
-          nextTrack();
-        }
-      }
-    }
-  });
-}
-function loadVideoByIndex(i){
-  const item = state.list[i];
-  if(!item.yt){ alert('This track has no YouTube ID yet. Click ✏️ Edit to set one.'); return; }
-  state.player.loadVideoById(item.yt);
-  state.currentIndex = i;
-  // set tone for this track
-  setToneHz(item.toneHz);
-  document.body.style.setProperty('--accent', item.hex||'#f6d7e6');
-  $('#toneHzBadge').textContent = `${item.toneHz} Hz`;
-}
-function playIndex(i){
-  if(!state.player){ buildPlayer(); }
-  // auto-start tone when playing a track (if toggled on)
-  loadVideoByIndex(i);
-}
-function nextTrack(){
-  const n = state.currentIndex + 1;
-  const next = n < state.list.length ? n : (state.loop ? 0 : null);
-  if(next===null) return;
-  loadVideoByIndex(next);
-}
-function prevTrack(){
-  const p = state.currentIndex - 1;
-  const prev = p >= 0 ? p : (state.loop ? state.list.length-1 : null);
-  if(prev===null) return;
-  loadVideoByIndex(prev);
-}
+$('#toneToggle').onclick=toggleTone; $('#toneGain').oninput=e=> setToneLevelFromSlider(Number(e.target.value));
 
-// ---------------------------
-// Audio (Tone Engine)
-// ---------------------------
-function ensureAudio(){
-  if(state.audio.ctx) return;
-  const ctx = new (window.AudioContext||window.webkitAudioContext)();
-  const osc = ctx.createOscillator();
-  const gain = ctx.createGain();
-  osc.type = 'sine';
-  gain.gain.value = dbToGain(-28); // default under bed
-  osc.connect(gain).connect(ctx.destination);
-  osc.start();
-  state.audio = {ctx,osc,gain,on:false, muted:false};
-  status($('#audioStatus'), true);
-}
-function dbToGain(db){ return Math.pow(10, db/20); }
-function setToneHz(hz){ ensureAudio(); state.audio.osc.frequency.value = hz; }
-function setToneLevelFromSlider(v){
-  // slider 0..100 -> dB range -48..-6
-  const db = -48 + (v/100)*(42);
-  state.audio.gain.gain.value = dbToGain(db);
-}
-function toggleTone(){ ensureAudio(); state.audio.on = !state.audio.on; $('#toneToggle').textContent = state.audio.on? '🔊 Tone: On' : '🔇 Tone: Off'; state.audio.gain.gain.value = state.audio.on ? state.audio.gain.gain.value : 0; if(state.audio.on && state.audio.muted){ state.audio.muted=false; $('#muteTone').textContent='🙊 Mute'; } }
-function muteTone(){ ensureAudio(); state.audio.muted = !state.audio.muted; $('#muteTone').textContent = state.audio.muted? '🔈 Unmute' : '🙊 Mute'; state.audio.gain.gain.value = state.audio.muted? 0 : state.audio.gain.gain.value || dbToGain(-28); }
+function esc(s){ return (s+"").replace(/[&<>\"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c])); }
 
-// ---------------------------
-// Import / Export / Save
-// ---------------------------
-function exportEdited(){
-  const lean = state.list.map(({artist,title,yt,hex,toneHz,seed,tags,blurb})=>({artist,title,yt,hex,toneHz,seed,tags,blurb}));
-  downloadJSON('ariana_voice_pack.json', lean);
-}
-
-function loadFromFile(file){
-  const reader = new FileReader();
-  reader.onload = ()=>{
-    try{
-      const data = JSON.parse(reader.result);
-      if(!Array.isArray(data)) throw new Error('Expected an array');
-      // gentle merge if same title, else replace
-      const byTitle = new Map(state.list.map((x)=>[x.title.toLowerCase(), x]));
-      data.forEach(item=>{
-        if(item && item.title){ byTitle.set(item.title.toLowerCase(), {...byTitle.get(item.title.toLowerCase()), ...item}); }
-      });
-      state.list = Array.from(byTitle.values());
-      renderList();
-    }catch(e){ alert('Import error: '+e.message); }
-  };
-  reader.readAsText(file);
-}
-
-function saveAll(){
-  // no backend; this simply re-renders to ensure edits are reflected
-  renderList();
-}
-
-// ---------------------------
-// Event Wiring (UI)
-// ---------------------------
-$('#prevBtn').onclick = prevTrack;
-$('#nextBtn').onclick = nextTrack;
-$('#playBtn').onclick = ()=>{ if(state.list[state.currentIndex].yt){ loadVideoByIndex(state.currentIndex); } else { alert('Current track missing YouTube ID — choose a track or edit an ID first.'); } };
-$('#pauseBtn').onclick = ()=>{ if(state.player) state.player.pauseVideo(); };
-$('#loopBtn').onclick = ()=>{ state.loop = !state.loop; updateQueueBadge(); };
-
-$('#toneToggle').onclick = toggleTone;
-$('#muteTone').onclick = muteTone;
-$('#toneGain').oninput = (e)=> setToneLevelFromSlider(Number(e.target.value));
-
-$('#exportBtn').onclick = exportEdited;
-$('#saveAll').onclick = saveAll;
-$('#fileIn').onchange = (e)=>{ if(e.target.files && e.target.files[0]) loadFromFile(e.target.files[0]); e.target.value=''; };
-
-// ---------------------------
-// Utils
-// ---------------------------
-function escapeHtml(str){ return (str+"").replace(/[&<>"]/g, s=> ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[s])); }
-
-// ---------------------------
 // Boot
-// ---------------------------
-renderList();
-setToneHz(state.list[0].toneHz);
-
+renderList(); setToneHz(state.list[0].toneHz);
 </script>
 <script src="https://www.youtube.com/iframe_api"></script>
-<script>
-// Fallback to mark API load failure after 5s
-setTimeout(()=>{ if(!window.YT || !YT.loaded){ status(document.getElementById('ytStatus'), false); } }, 5000);
-</script>
-
-<!-- Imagined note from Ariana (site footer copy):
-  "Hey love—keep it light and honest. Breathe first, then say it clean. Let the fun in. You’re already worthy. I’m rooting for your voice to feel like home." ✨
--->
+<script>setTimeout(()=>{ if(!window.YT||!YT.loaded){ status(document.getElementById('ytStatus'), false);} }, 5000);</script>
 </body>
 </html>
